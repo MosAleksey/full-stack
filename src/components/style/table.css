@@ -1,0 +1,9 @@
+.machineRow:hover{
+    border: 3px solid #0d6efd;
+}
+.machineRow:hover td{
+    border: none;
+}
+.errTable {
+    --bs-table-striped-bg: none;
+}
