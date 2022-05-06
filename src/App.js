@@ -3,7 +3,6 @@ import MachinesPage from "./pages/MachinesPage";
 import MachineInfoPage from "./pages/MachineInfoPage"
 import ErrorsPage from "./pages/ErrorsPage";
 import ErrorPropertyPage from "./pages/ErrorPropertyPage";
-import DataBase_context from "./context";
 
 function App() {
 
