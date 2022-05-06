@@ -1,21 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NavBar from "../components/NavBar";
 import {Col, Container, Row} from "react-bootstrap";
 import {error__query} from "../components/queries/error__query";
 import ErrorTable from "../components/errorTable";
 import CreateError from "../components/modals/create.error";
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const ErrorsPage = () => {
-
-    const [error, setError] = useState([])
+const ErrorsPage = observer(() => {
+    const {__error} = useContext(Context)
     const [createErrorVisible, setCreateErrorVisible] = useState(false)
 
-    function get__errors() {
-        error__query().then(error_obj => setError(error_obj))
-    }
-
     useEffect(() => {
-        get__errors()
+        error__query().then(data => __error.setError(data))
     }, [])
 
     return (
@@ -24,7 +21,7 @@ const ErrorsPage = () => {
             <Container>
                 <Row>
                     <Col className='col-lg-12'>
-                        <ErrorTable props={error}/>
+                        <ErrorTable />
                     </Col>
                 </Row>
                 <Row>
@@ -35,10 +32,10 @@ const ErrorsPage = () => {
                         >| Добавить заявку -></h6>
                     </Col>
                 </Row>
-                <CreateError err_list={error} show={createErrorVisible} onHide={() => setCreateErrorVisible(false)}/>
+                {/*<CreateError err_list={__error} show={createErrorVisible} onHide={() => setCreateErrorVisible(false)}/>*/}
             </Container>
         </div>
     );
-};
+});
 
 export default ErrorsPage;

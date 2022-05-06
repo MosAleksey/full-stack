@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Container, Table} from "react-bootstrap";
 import ErrorTableBody from "./errorTableBody";
 import './style/table.css'
+import {Context} from "../index";
+import {observer} from "mobx-react-lite";
 
-const ErrorTable = ({props}) => {
+const ErrorTable = observer(() => {
+    const {__error} = useContext(Context)
+
     return (
         <Container>
             <Table striped bordered hover style={{marginTop: '20px'}} className='errTable'>
@@ -20,13 +24,13 @@ const ErrorTable = ({props}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {props.map(fields =>
-                    <ErrorTableBody fields={fields} key={fields.id}/>
+                {__error.data_Error.map(element =>
+                    <ErrorTableBody fields={element} key={element.id}/>
                 )}
                 </tbody>
             </Table>
         </Container>
     );
-};
+});
 
 export default ErrorTable;

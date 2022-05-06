@@ -18,10 +18,6 @@ const ErrorPropertyPage = () => {
     }
     const [error, setError] = useState([])
 
-    const formData = new FormData()
-    formData.append('status', '2')
-    console.log(formData)
-
     return (
         <div>
             <NavBar/>
@@ -50,7 +46,7 @@ const ErrorPropertyPage = () => {
                 <Row>
                     <Col className='col-md-6 d-flex'>
                         <Button style={{marginRight: '5px'}} variant="warning" onClick={() => {
-                            error__query__update(`api/errors/${id}`, formData)
+                            error__query__update(`api/errors/${id}`)
                         }}>Принять в работу</Button>
                         <Button style={{marginLeft: '5px'}} variant="success">Завершить</Button>
                     </Col>
