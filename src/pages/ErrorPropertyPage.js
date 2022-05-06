@@ -9,9 +9,18 @@ const ErrorPropertyPage = () => {
 
     const {id} = useParams()
     const [error, setError] = useState([])
+    const [status, setStatus] = useState([])
     useEffect(() => {
         error__query__byid(`api/errors/${id}`).then(data => setError(data))
-    }, [])
+    }, [status])
+
+    const req_status = () => {
+        let object = {
+            status:"2"
+        }
+        setStatus(object)
+        return object
+    }
 
     return (
         <div>
@@ -41,7 +50,7 @@ const ErrorPropertyPage = () => {
                 <Row>
                     <Col className='col-md-6 d-flex'>
                         <Button style={{marginRight: '5px'}} variant="warning" onClick={() => {
-                            error__query__update(`api/errors/${id}`)
+                            error__query__update(`api/errors/${id}`, req_status())
                         }}>Принять в работу</Button>
                         <Button style={{marginLeft: '5px'}} variant="success">Завершить</Button>
                     </Col>

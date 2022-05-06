@@ -8,7 +8,7 @@ export const error__query__byid  = async (custom__query) => {
     const {data} = await $host.get(custom__query)
     return data
 }
-export const error__query__update  = async (custom__query) => {
-    const {data} = await $host.put(custom__query, )
+export const error__query__update  = async (custom__query, req_data) => {
+    const {data} = await $host.put(custom__query, req_data)
     return data
 }

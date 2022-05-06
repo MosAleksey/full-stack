@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import NavBar from "../components/NavBar";
 import {machine__list__filterquery, machine__list__query} from "../components/queries/machine__list__query";
 import MachineTable from "../components/machineTable";
-import {Button, Col, Container, Row, Stack} from "react-bootstrap";
+import {Col, Container, Row, Stack} from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
 
