@@ -7,16 +7,11 @@ import StatisticTable from "../components/statistic_table";
 
 const MachineInfoPage = () => {
 
-    useEffect(() => {
-        get_machine_info()
-    }, [])
-
     const [inform, setInform] = useState([])
     const {inv_number} = useParams()
-
-    const get_machine_info = () => {
+    useEffect(() => {
         machine__Info__query(inv_number).then(data => setInform(data))
-    }
+    }, [])
 
     function isNull() {
         if (!inform.img) {
@@ -32,12 +27,6 @@ const MachineInfoPage = () => {
         return array
     }
 
-    function get_link_list() {
-        for (let i = 0; i < split_link().length; i++) {
-            <li>{split_link()[i]}</li>
-        }
-    }
-
     const SERVER_URL = 'http://localhost:8080/'
     return (
         <div>
@@ -46,7 +35,7 @@ const MachineInfoPage = () => {
                 <Row>
                     <Col className='col-md-4'>
                         <div>
-                            <Image width={426} height={'auto'} src={SERVER_URL + isNull()}/>
+                            <Image width={300} height={'auto'} src={SERVER_URL + isNull()}/>
                         </div>
                     </Col>
                     <Col className='col-md-8 d-flex justify-content-center'>
@@ -62,8 +51,8 @@ const MachineInfoPage = () => {
                                 <Col className='col-sm-12'>
                                     <h5>Ссылки на документацию</h5>
                                     <ul>
-                                        {split_link().map(link =>
-                                            <li key={link.length}><a href={link}>{link}</a></li>
+                                        {split_link().map(element =>
+                                            <li key={element.length}><a href={element}>{element}</a></li>
                                         )}
                                     </ul>
                                     <hr style={{color: 'black', width: '100%'}}/>

@@ -7,16 +7,11 @@ import ErrorTableBody from "../components/errorTableBody";
 
 const ErrorPropertyPage = () => {
 
-    useEffect(() => {
-        custom__query(id)
-    }, [])
-
     const {id} = useParams()
-
-    const custom__query = (id) => {
-        error__query__byid(`api/errors/${id}`).then(data => setError(data))
-    }
     const [error, setError] = useState([])
+    useEffect(() => {
+        error__query__byid(`api/errors/${id}`).then(data => setError(data))
+    }, [])
 
     return (
         <div>

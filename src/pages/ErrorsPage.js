@@ -13,7 +13,7 @@ const ErrorsPage = observer(() => {
 
     useEffect(() => {
         error__query().then(data => __error.setError(data))
-    }, [])
+    },[])
 
     return (
         <div>
