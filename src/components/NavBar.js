@@ -14,7 +14,7 @@ const NavBar = () => {
                     <Link to="/machines">
                         <Button style={{margin: '5px', fontWeight: '600', fontSize: '17px'}}>Оборудование</Button>
                     </Link>
-                    <Link to="/machines">
+                    <Link to="/users">
                         <Button style={{margin: '5px', fontWeight: '600', fontSize: '17px'}}>Сотрудники</Button>
                     </Link>
                     <Link to="/#">
