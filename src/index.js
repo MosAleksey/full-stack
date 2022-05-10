@@ -4,6 +4,7 @@ import {BrowserRouter} from "react-router-dom";
 import App from './App';
 import ErrorStore from "./contexts/errorStore";
 import UserStore from "./contexts/userStore";
+import ShopStore from "./contexts/shopStore";
 
 export const Context = createContext(null)
 
@@ -12,7 +13,8 @@ root.render(
     <BrowserRouter>
         <Context.Provider value={{
             __error: new ErrorStore(),
-            __user: new UserStore()
+            __user: new UserStore(),
+            __shop: new ShopStore()
         }}>
             <App/>
         </Context.Provider>
