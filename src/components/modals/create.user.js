@@ -18,10 +18,11 @@ const CreateUser = observer(({show, onHide}) => {
         shop_query().then(data => __shop.setShop(data))
         user_query().then(data => __user.setUser(data))
         user_functions_query().then(data => __user.setUserFunction(data))
-    }, [])
+    }, [!show])
 
     const create_User = () => {
         create_user_query(addUser)
+        onHide()
     }
     return (
         <div>
