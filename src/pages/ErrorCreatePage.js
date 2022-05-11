@@ -71,11 +71,16 @@ const ErrorCreatePage = observer(() => {
                             <Form.Control style={{marginLeft:'10px'}} defaultValue={stateUser.element} disabled placeholder="Оператор"/>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col className="col-lg-12 mt-3">
+                            <Form.Control type="date" placeholder="Дата"/>
+                        </Col>
+                    </Row>
                 </Form>
                 <CreateErrorInvNumber getinv={get_machine_info} show={invVisible} onHide={() => {
                     setInvVisible(false)
                 }}/>
-                <Button onClick={() => compare_shop_id()}>Check</Button>
+                {/*<Button onClick={() => compare_shop_id()}>Check</Button>*/}
             </Container>
         </div>
     );
