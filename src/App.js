@@ -5,6 +5,7 @@ import ErrorsPage from "./pages/ErrorsPage";
 import ErrorPropertyPage from "./pages/ErrorPropertyPage";
 import AboutPage from "./pages/AboutPage";
 import UserPage from "./pages/UserPage";
+import ErrorCreatePage from "./pages/ErrorCreatePage";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/errors/:id" element={<ErrorPropertyPage/>}/>
             <Route path="/about" element={<AboutPage/>}/>
             <Route path="/users" element={<UserPage/>}/>
+            <Route path="/errorcreate" element={<ErrorCreatePage/>}/>
         </Routes>
     );
 }

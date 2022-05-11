@@ -5,6 +5,7 @@ import App from './App';
 import ErrorStore from "./contexts/errorStore";
 import UserStore from "./contexts/userStore";
 import ShopStore from "./contexts/shopStore";
+import MachineStore from "./contexts/machineStore";
 
 export const Context = createContext(null)
 
@@ -14,7 +15,8 @@ root.render(
         <Context.Provider value={{
             __error: new ErrorStore(),
             __user: new UserStore(),
-            __shop: new ShopStore()
+            __shop: new ShopStore(),
+            __machine: new MachineStore()
         }}>
             <App/>
         </Context.Provider>

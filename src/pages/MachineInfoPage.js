@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import NavBar from "../components/NavBar";
-import {machine__Info__query} from "../components/queries/machine__info_query";
+import {machine__Info__query, machine__Info__query__By_Id} from "../components/queries/machine__info_query";
 import {Col, Container, Image, Row} from "react-bootstrap";
 import StatisticTable from "../components/statistic_table";
 
@@ -10,7 +10,7 @@ const MachineInfoPage = () => {
     const [inform, setInform] = useState([])
     const {inv_number} = useParams()
     useEffect(() => {
-        machine__Info__query(inv_number).then(data => setInform(data))
+        machine__Info__query__By_Id(inv_number).then(data => setInform(data))
     }, [])
 
     function isNull() {
