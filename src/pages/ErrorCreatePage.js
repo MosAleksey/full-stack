@@ -6,6 +6,7 @@ import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {shop_query} from "../components/queries/shop_query";
 import {user_query} from "../components/queries/user_query";
+import {error__query__create} from "../components/queries/error__query";
 
 const ErrorCreatePage = observer(() => {
     const {__shop} = useContext(Context)
@@ -66,6 +67,7 @@ const ErrorCreatePage = observer(() => {
     })
     const add_error = () => {
         console.log(dataError)
+        error__query__create(dataError)
     }
 
     return (

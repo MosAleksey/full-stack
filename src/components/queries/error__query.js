@@ -12,3 +12,8 @@ export const error__query__update  = async (custom__query, req_data) => {
     const {data} = await $host.put(custom__query, req_data)
     return data
 }
+
+export const error__query__create  = async (json_string) => {
+    const response = await $host.post(`api/errors`, {json_string})
+    return response
+}
