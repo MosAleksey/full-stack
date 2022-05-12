@@ -163,6 +163,9 @@ const ErrorCreatePage = observer(() => {
                     <Col className="col-lg-3 mt-3">
                         <Form.Control type="file" onChange={selectFile}/>
                     </Col>
+                    <Col className="col-lg-3 mt-4">
+                        <p>* Необязательное услови</p>
+                    </Col>
                 </Row>
             </Container>
             <Container>
