@@ -5,19 +5,23 @@ import CreateErrorInvNumber from "../components/modals/create.error.inv_number";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {shop_query} from "../components/queries/shop_query";
+import {user_query} from "../components/queries/user_query";
 
 const ErrorCreatePage = observer(() => {
     const {__shop} = useContext(Context)
+    const {__user} = useContext(Context)
     useEffect(() => {
         shop_query().then(data => __shop.setShop(data))
+        user_query().then(data => __user.setUser(data))
     }, [])
 
     const [invVisible, setInvVisible] = useState(false)
 
-    const compare_shop_id = () => {
+    const compare_shop_machine_id = (shop_name, machine_id) => {
         __shop.data_Shop.forEach(element => {
-            if (element.name === machineInfo.shop_name)
-                console.log(element.id)
+            if (element.name === shop_name)
+                setDataError({...dataError, machine_id: machine_id, shop_id: String(element.id)})
+            // console.log(element.name)
         })
     }
 
@@ -30,9 +34,38 @@ const ErrorCreatePage = observer(() => {
             input_value: input_value,
             users_work: users
         })
+        compare_shop_machine_id(shop_name, String(machine_id))
         if (machineInfo) {
             setStateUser({...stateUser, disable: false})
         }
+    }
+
+    const [userOneinfo, setOneUserinfo] = useState({})
+    const compare_one_user_id = (user_id) => {
+        __user.data_User.map(element => {
+            if (String(element.id) === user_id) {
+                let user_obj = {
+                    personal_number: element.personal_number,
+                    first_name: element.first_name,
+                    second_name: element.second_name
+                }
+                // console.log()
+                setOneUserinfo(user_obj)
+            }
+        })
+
+    }
+    const [dataError, setDataError] = useState({
+        machine_id: '',
+        title: '',
+        date: '',
+        description: '',
+        shop_id: '',
+        operator_id: '',
+        status: '1'
+    })
+    const add_error = () => {
+        console.log(dataError)
     }
 
     return (
@@ -47,8 +80,10 @@ const ErrorCreatePage = observer(() => {
                 <Form>
                     <Row>
                         <Col className="col-lg-12 mt-3">
-                            <Form.Control defaultValue={machineInfo.input_value} placeholder="Инвентарный Номер"
-                                          onClick={() => setInvVisible(true)}/>
+                            <Form.Control defaultValue={machineInfo.input_value}
+                                          placeholder="Выбор оборудования || инвентарный номер"
+                                          onClick={() => setInvVisible(true)}
+                            />
                         </Col>
                     </Row>
                     <Row>
@@ -63,17 +98,37 @@ const ErrorCreatePage = observer(() => {
                                     Оператор
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    {new String(machineInfo.users_work).split(',').map((element, index) =>
-                                        <Dropdown.Item onClick={() => setStateUser({...stateUser, element: element})} key={index}>{element}</Dropdown.Item>
+                                    {String(machineInfo.users_work).split(',').map((element, index) =>
+                                        <Dropdown.Item onClick={() => {
+                                            setStateUser({...stateUser, element: element});
+                                            setDataError({...dataError, operator_id: element});
+                                            compare_one_user_id(element)
+                                        }} key={index}>{__user.data_User.map(name => {
+                                            if (String(name.id) === element) return `${name.personal_number} || ${name.second_name} ${name.first_name}`
+                                        })}</Dropdown.Item>
                                     )}
                                 </Dropdown.Menu>
                             </Dropdown>
-                            <Form.Control style={{marginLeft:'10px'}} defaultValue={stateUser.element} disabled placeholder="Оператор"/>
+                            <Form.Control style={{marginLeft: '10px'}} defaultValue={userOneinfo.second_name} disabled
+                                          placeholder="Оператор"/>
                         </Col>
                     </Row>
                     <Row>
                         <Col className="col-lg-12 mt-3">
-                            <Form.Control type="date" placeholder="Дата"/>
+                            <Form.Control type="text" placeholder="Заголовок"
+                                          onChange={(e) => setDataError({...dataError, title: e.target.value})}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-12 mt-3">
+                            <Form.Control type="date" placeholder="Дата"
+                                          onChange={(e) => setDataError({...dataError, date: e.target.value})}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="col-lg-12 mt-3">
+                            <Form.Control style={{height: '6rem'}} type="text" placeholder="Описание"
+                                          onChange={(e) => setDataError({...dataError, description: e.target.value})}/>
                         </Col>
                     </Row>
                 </Form>
@@ -81,6 +136,13 @@ const ErrorCreatePage = observer(() => {
                     setInvVisible(false)
                 }}/>
                 {/*<Button onClick={() => compare_shop_id()}>Check</Button>*/}
+            </Container>
+            <Container>
+                <Row>
+                    <Col className="col-lg-5 mt-4">
+                        <Button variant="success" onClick={() => add_error()}>Опубликовать заявку</Button>
+                    </Col>
+                </Row>
             </Container>
         </div>
     );
