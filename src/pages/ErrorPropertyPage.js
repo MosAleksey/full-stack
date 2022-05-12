@@ -4,9 +4,10 @@ import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import {error__query__byid, error__query__update} from "../components/queries/error__query";
 import ErrorTableBody from "../components/errorTableBody";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 const ErrorPropertyPage = () => {
-
     const {id} = useParams()
     const [error, setError] = useState([])
     const [status, setStatus] = useState([])
@@ -20,6 +21,13 @@ const ErrorPropertyPage = () => {
         }
         setStatus(object)
         return object
+    }
+
+    const status_disable = () => {
+        let disable = false
+        if (!error.explanatory)
+            disable = true
+        return disable
     }
 
     return (
@@ -39,6 +47,7 @@ const ErrorPropertyPage = () => {
                                 <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Описание</th>
                                 <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Дата</th>
                                 <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Статус</th>
+                                <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Объяснительная</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,6 +56,14 @@ const ErrorPropertyPage = () => {
                         </Table>
                     </Col>
                 </Row>
+                <Row>
+                    <Col className="col-lg-12 d-flex justify-content-end">
+                        <Button disabled={status_disable()} style={{marginRight: '20px'}} href={`http://localhost:8080/${error.explanatory}`}>
+                            <FontAwesomeIcon icon={faDownload}/><span> Скачать</span>
+                        </Button>
+                    </Col>
+                </Row>
+                <hr/>
                 <Row>
                     <Col className='col-md-6 d-flex'>
                         <Button style={{marginRight: '5px'}} variant="warning" onClick={() => {

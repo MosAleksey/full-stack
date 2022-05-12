@@ -1,5 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleCheck} from "@fortawesome/free-solid-svg-icons";
 
 const ErrorTableBody = ({fields}) => {
 
@@ -20,6 +22,13 @@ const ErrorTableBody = ({fields}) => {
             return 'В работе'
         if (value == 3)
             return 'Завершено'
+    }
+
+    const status_display = () => {
+        let display = ''
+        if (!fields.explanatory)
+            display = 'none'
+        return display
     }
 
     const navigate = useNavigate()
@@ -66,8 +75,16 @@ const ErrorTableBody = ({fields}) => {
                 verticalAlign: 'middle',
                 backgroundColor: `${status_color()}`
             }}>{status_value(fields.status)}</td>
+            <td style={{
+                textAlign: 'center',
+                verticalAlign: 'middle',
+                // backgroundColor: `${status_color()}`
+            }}><FontAwesomeIcon style={{color:'green', display: `${status_display()}`, cursor: 'pointer'}} icon={faCircleCheck} /></td>
         </tr>
     );
 };
 
 export default ErrorTableBody;
+
+
+

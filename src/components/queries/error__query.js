@@ -13,7 +13,7 @@ export const error__query__update  = async (custom__query, req_data) => {
     return data
 }
 
-export const error__query__create  = async (json_string) => {
-    const response = await $host.post(`api/errors`, {json_string})
+export const error__query__create  = async (error_data) => {
+    const {response} = await $host.post(`api/errors`, error_data)
     return response
 }

@@ -20,8 +20,9 @@ const ErrorCreatePage = observer(() => {
 
     const compare_shop_machine_id = (shop_name, machine_id) => {
         __shop.data_Shop.forEach(element => {
-            if (element.name === shop_name)
+            if (element.name === shop_name){
                 setDataError({...dataError, machine_id: machine_id, shop_id: String(element.id)})
+            }
             // console.log(element.name)
         })
     }
@@ -63,11 +64,26 @@ const ErrorCreatePage = observer(() => {
         description: '',
         shop_id: '',
         operator_id: '',
-        status: '1'
+        status: '1',
+        explanatory: null
     })
     const add_error = () => {
-        console.log(dataError)
-        error__query__create(dataError)
+        // console.log(dataError)
+        const formData = new FormData()
+        formData.append('machine_id', dataError.machine_id)
+        formData.append('title', dataError.title)
+        formData.append('date', dataError.date)
+        formData.append('description', dataError.description)
+        formData.append('shop_id', dataError.shop_id)
+        formData.append('operator_id', dataError.operator_id)
+        formData.append('status', dataError.status)
+        formData.append('explanatory', dataError.explanatory)
+        error__query__create(formData)
+        // console.log(formData.get('explanatory'))
+    }
+
+    const selectFile = e => {
+        setDataError({...dataError, explanatory: e.target.files[0]})
     }
 
     return (
@@ -138,11 +154,21 @@ const ErrorCreatePage = observer(() => {
                     setInvVisible(false)
                 }}/>
                 {/*<Button onClick={() => compare_shop_id()}>Check</Button>*/}
+                <Row>
+                    <Col className="col-lg-13 mt-3">
+                        <h6>Прикрепить объяснительную записку</h6>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="col-lg-3 mt-3">
+                        <Form.Control type="file" onChange={selectFile}/>
+                    </Col>
+                </Row>
             </Container>
             <Container>
                 <Row>
                     <Col className="col-lg-5 mt-4">
-                        <Button variant="success" onClick={() => add_error()}>Опубликовать заявку</Button>
+                        <Button variant="success" onClick={()=> add_error()}>Опубликовать заявку</Button>
                     </Col>
                 </Row>
             </Container>

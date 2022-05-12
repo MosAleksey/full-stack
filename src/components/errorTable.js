@@ -21,6 +21,7 @@ const ErrorTable = observer(() => {
                     <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Описание</th>
                     <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Дата</th>
                     <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Статус</th>
+                    <th style={{textAlign: 'center', verticalAlign: 'middle'}}>Объяснительная</th>
                 </tr>
                 </thead>
                 <tbody>
