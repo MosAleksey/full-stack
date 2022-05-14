@@ -17,3 +17,13 @@ export const error__query__create  = async (error_data) => {
     const {response} = await $host.post(`api/errors`, error_data)
     return response
 }
+
+export const error__inspect__query_create = async (err_id, inspect_data) => {
+    const {response} = await $host.post(`api/errors/${err_id}`, inspect_data)
+    return response
+}
+
+export const  error__inspect_query = async (err_id) => {
+    const {data} = await $host.get(`api/errors/${err_id}/inspect`)
+    return data
+}

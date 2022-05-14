@@ -9,18 +9,22 @@ const ErrorTableBody = ({fields}) => {
         let color = ''
         if (fields.status == 1)
             color = '#D53838'
-        if (fields.status == 2)
-            color = '#FFD966'
         if (fields.status == 3)
-            color = '#31EA79'
+            color = '#FFD966'
+        if (fields.status == 4)
+            color = '#289a56'
+        if (fields.status == 2)
+            color = '#66ddff'
         return color
     }
     const status_value = (value) => {
         if (value == '1')
             return 'Новая'
         if (value == '2')
+            return 'Осмотрено'
+        if (value == '3')
             return 'В работе'
-        if (value == 3)
+        if (value == '4')
             return 'Завершено'
     }
 
