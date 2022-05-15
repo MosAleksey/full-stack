@@ -116,7 +116,7 @@ const ErrorInspecttion = observer(({fields, status}) => {
                             </Table>
                         </Col>
                         <Col className="col-lg-6">
-                            <Form.Control defaultValue={`${defaultValue.inspect_error}`} style={{height: '91%'}}
+                            <Form.Control as="textarea" defaultValue={`${defaultValue.inspect_error}`} style={{height: '91%'}}
                                           placeholder=""
                                           onChange={(e) => setInspect({...inspect, inspect_error: e.target.value})}/>
                         </Col>
@@ -127,7 +127,7 @@ const ErrorInspecttion = observer(({fields, status}) => {
                             <Form.Text>
                                 <h5><FontAwesomeIcon icon={faScrewdriverWrench}/> Список необходимых запчастей</h5>
                             </Form.Text>
-                            <Form.Control defaultValue={`${defaultValue.repair_kit}`} style={{height: '5rem'}}
+                            <Form.Control as="textarea" defaultValue={`${defaultValue.repair_kit}`} style={{height: '5rem'}}
                                           placeholder="Описание необходимых запчастей в наличии или под заказ"
                                           onChange={(e) => setInspect({...inspect, repair_kit: e.target.value})}/>
                         </Col>
