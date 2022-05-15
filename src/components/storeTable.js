@@ -2,20 +2,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Container, Table} from "react-bootstrap";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import {store_query} from "./queries/store_query";
+import {store__query} from "./queries/store_query";
 import StoreTableBody from "./storeTableBody";
 
-const StoreTable = observer(() => {
+const StoreTable = observer(({inTarget, update}) => {
     const {__machine} = useContext(Context)
     useEffect(()=>{
-        store_query().then(data => __machine.setStore(data))
-    }, [])
+        store__query().then(data => __machine.setStore(data))
+    }, [update])
 
     const [target, setTarget] =useState({target_id:'', color:''})
-    const [changeVisible, setChangeVisible] = useState(false)
-    const [createVisible, setCreateVisible] = useState(false)
     const change_element = (element) => {
             setTarget(element)
+            inTarget(element.target_id)
     }
     return (
         <Container>
