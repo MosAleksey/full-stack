@@ -44,11 +44,11 @@ const ErrorPropertyPage = observer(() => {
         } else
             if (error.status === 2)
             {
-                return <div><ErrorInspecttion fields={error} status={req_status}/><ErrorGetInWork/></div>
+                return <div><ErrorInspecttion fields={error} status={req_status}/><ErrorGetInWork fields={error}/></div>
             }else
                 if (error.status === 3)
                 {
-                    return <div><ErrorInspecttion fields={error} status={req_status}/><ErrorGetInWork/><ErrorGetFinish/></div>
+                    return <div><ErrorInspecttion fields={error} status={req_status}/><ErrorGetInWork fields={error}/><ErrorGetFinish/></div>
                 }
 
     }

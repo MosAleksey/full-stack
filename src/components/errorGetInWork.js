@@ -4,12 +4,15 @@ import {observer} from "mobx-react-lite";
 import {useContext, useEffect} from "react";
 import {Context} from "../index";
 import {user_query} from "./queries/user_query";
+import {store__query__bybrand} from "./queries/store_query";
 
-const ErrorGetInWork = observer(() => {
+const ErrorGetInWork = observer(({fields}) => {
     const {__user} = useContext(Context)
+    const [storeByBrand, setStoreByBrand] = useState([])
 
     useEffect(() => {
         user_query().then(data => __user.setUser(data))
+        store__query__bybrand(fields.b_name).then(data=> setStoreByBrand(data))
     }, [])
     const [repair, setRepair] = useState([])
     const addRepair = () => {
@@ -83,14 +86,18 @@ const ErrorGetInWork = observer(() => {
                     <Row>
                         <Col className="col-lg-6">
                             <Form.Text>
-                                <h5>Испоьзуемые запчасти</h5>
+                                <h5>Компоненты на складе</h5>
                             </Form.Text>
+                            <div className="mb-2">
+                                <Form.Text>
+                                    * В список включены компоненты на аналогичное оборудование
+                                </Form.Text>
+                            </div>
                             <ListGroup>
-                                <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                                {storeByBrand.map(element =>
+                                    <ListGroup.Item key={element.id}>{element.m_title} || {element.title}</ListGroup.Item>
+                                )}
+
                             </ListGroup>
                         </Col>
                         <Col className="col-lg-6">
@@ -99,6 +106,7 @@ const ErrorGetInWork = observer(() => {
                         </Col>
 
                     </Row>
+                    <Button></Button>
                 </Form.Group>
             </Form>
         </div>

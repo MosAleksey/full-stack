@@ -24,3 +24,7 @@ export const create__store__query = async (storedata) => {
     const response = await $host.post(`api/store`, storedata)
     return response
 }
+export const store__query__bybrand = async (brand) => {
+    const {data} = await $host.get(`api/store/filter/${brand}`)
+    return data
+}
