@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Form, Modal, Table} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
-import {update__store__query__byid} from "../queries/store_query";
+import {delete__store__query__byid, update__store__query__byid} from "../queries/store_query";
 
 const ChangeStoreElement = observer(({show, onHide, id, context}) => {
     const [updateStore, setUpdateStore] = useState({title:'', fettle:'', availability:''})
@@ -78,7 +78,7 @@ const ChangeStoreElement = observer(({show, onHide, id, context}) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="warning" onClick={()=> update_store()}>Изменить</Button>
-                    <Button variant="danger" onClick={()=> console.log(id)}>Удалить</Button>
+                    <Button variant="danger" onClick={()=> {delete__store__query__byid(context.id); onHide()}}>Удалить</Button>
                     <Button onClick={onHide}>Закрыть</Button>
                 </Modal.Footer>
             </Modal>

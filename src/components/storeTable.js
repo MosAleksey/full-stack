@@ -5,11 +5,11 @@ import {observer} from "mobx-react-lite";
 import {store__query} from "./queries/store_query";
 import StoreTableBody from "./storeTableBody";
 
-const StoreTable = observer(({inTarget, update}) => {
+const StoreTable = observer(({inTarget, update, update_cr}) => {
     const {__machine} = useContext(Context)
     useEffect(()=>{
         store__query().then(data => __machine.setStore(data))
-    }, [update])
+    }, [update, update_cr])
 
     const [target, setTarget] =useState({target_id:'', color:''})
     const change_element = (element) => {
