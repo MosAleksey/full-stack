@@ -37,7 +37,7 @@ const ErrorInspecttion = observer(({fields, status}) => {
     }
 
     const inspect_button_disabled = () => {
-        if (fields.status === 2)
+        if (fields.status === 2 || fields.status === 3 || fields.status === 4)
             return true
     }
 

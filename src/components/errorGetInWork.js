@@ -94,7 +94,7 @@ const ErrorGetInWork = observer(() => {
                             </ListGroup>
                         </Col>
                         <Col className="col-lg-6">
-                            <Form.Text><h5>Подбор комплектующих со склада</h5></Form.Text>
+                            <Form.Text><h5>Приклепленная разовая заявка на покупку комплектующих</h5></Form.Text>
 
                         </Col>
 

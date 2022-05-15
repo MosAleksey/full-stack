@@ -1,0 +1,4 @@
+.shadow-div:hover{
+    box-shadow: 12px 12px 2px 1px rgba(35, 33, 33, 0.52);
+    cursor: pointer;
+}

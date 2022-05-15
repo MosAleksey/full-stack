@@ -6,12 +6,15 @@ import ErrorPropertyPage from "./pages/ErrorPropertyPage";
 import AboutPage from "./pages/AboutPage";
 import UserPage from "./pages/UserPage";
 import ErrorCreatePage from "./pages/ErrorCreatePage";
+import StorePage from "./pages/StorePage";
+import MainPage from "./pages/MainPage";
 
 function App() {
 
     return (
 
         <Routes>
+            <Route path="/" element={<MainPage />}/>
             <Route path="/errors" element={<ErrorsPage/>}/>
             <Route path="/machines" element={<MachinesPage/>}/>
             <Route path="/machines/:inv_number" element={<MachineInfoPage/>}/>
@@ -19,6 +22,7 @@ function App() {
             <Route path="/about" element={<AboutPage/>}/>
             <Route path="/users" element={<UserPage/>}/>
             <Route path="/errorcreate" element={<ErrorCreatePage/>}/>
+            <Route path="/store" element={<StorePage />}/>
         </Routes>
     );
 }

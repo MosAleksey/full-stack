@@ -5,6 +5,7 @@ class MachineStore{
         this._machine_Info_Data = []
         this._type_Data = []
         this._brand_Data = []
+        this._store_data = []
         makeAutoObservable(this)
     }
     setMachineInfo(machine){
@@ -16,6 +17,9 @@ class MachineStore{
     setBrand(brand){
         this._brand_Data = brand
     }
+    setStore(store){
+        this._store_data = store
+    }
     get machine_Info_Data(){
         return this._machine_Info_Data
     }
@@ -24,6 +28,9 @@ class MachineStore{
     }
     get brand_Data(){
         return this._brand_Data
+    }
+    get store_Data(){
+        return this._store_data
     }
 }
 export default MachineStore
