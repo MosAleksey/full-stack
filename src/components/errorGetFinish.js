@@ -18,7 +18,7 @@ const ErrorGetFinish = observer(() => {
                             <div>
                                 <Form.Text>
                                     <h5>Комиссия к осмотру</h5><p>В комиссии к осмотру состоят только сотрудники
-                                    имеющие специальность "Сервисный инженер"</p>
+                                    имеющие специальность "Сервисный инженер" или "Механик"</p>
                                 </Form.Text>
                             </div>
                         </Col>
@@ -41,8 +41,16 @@ const ErrorGetFinish = observer(() => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {__user.data_User.map(element =>
-                                <td></td>
+                                {__user.data_User.map((element) => {
+                                        if ((String(element.function_title) === "Сервисный инженер") || String(element.function_title) === "Механик")
+                                            return <tr key={element.id}>
+                                                <td>{element.personal_number}</td>
+                                                <td>{element.second_name} {element.first_name}</td>
+                                                <td>{element.function_title}</td>
+                                                <td><Form.Check
+                                                    type="checkbox"/></td>
+                                            </tr>
+                                    }
                                 )}
                                 </tbody>
                             </Table>
