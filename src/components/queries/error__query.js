@@ -37,3 +37,13 @@ export const error__inwork__query = async (err_id) => {
     const {data} = await $host.get(`api/errors/${err_id}/inwork`)
     return data
 }
+
+export const error__archive__create =async (err_id, archive_data) => {
+    const {response} = await $host.post(`api/errors/${err_id}/archive`, archive_data)
+    return response
+}
+
+export const error__archive__byid = async (err_id) => {
+    const {data} = await $host.get(`api/errors/${err_id}/archive`)
+    return data
+}

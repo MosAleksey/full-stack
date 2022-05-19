@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Col, Form, Row, Table} from "react-bootstrap";
 
-const ErrorGetFinishFooter = ({userInspect, errorInspect}) => {
+const ErrorGetFinishFooter = ({userInspect, errorArchive}) => {
     return (
         <div>
             <hr/>
@@ -43,7 +43,7 @@ const ErrorGetFinishFooter = ({userInspect, errorInspect}) => {
                         <Form.Text><h5>Выявленные комиссией неисправности</h5><p> </p></Form.Text>
                     </div>
                     <div>
-                        <Form.Control defaultValue={errorInspect.inspect_error} as="textarea" placeholder="Выявленные неисправности"/>
+                        <Form.Control defaultValue={errorArchive.descript_inspect_error} as="textarea" placeholder="Выявленные неисправности"/>
                     </div>
                 </Col>
             </Row>
@@ -52,7 +52,7 @@ const ErrorGetFinishFooter = ({userInspect, errorInspect}) => {
                     <div className="mb-2 mt-2">
                         <Form.Text>Акт проверки оборудования на геометрическую точность до начала ремонта</Form.Text>
                     </div>
-                    <a href={`http://localhost:8080/${errorInspect.geometry_fail_akt}`} target="_blank">Скачать акт</a>
+                    <a href={`http://localhost:8080/${errorArchive.geometry_fail_akt}`} target="_blank">Скачать акт</a>
                 </Col>
             </Row>
         </div>

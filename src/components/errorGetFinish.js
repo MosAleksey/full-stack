@@ -3,7 +3,12 @@ import {Button, Col, Form, Row, Table} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {user_query} from "./queries/user_query";
-import {error__inspect_query, error__inwork__query} from "./queries/error__query";
+import {
+    error__archive__byid, error__archive__create,
+    error__inspect_query,
+    error__inwork__query,
+    error_archive_create
+} from "./queries/error__query";
 import {store__query__bybrand} from "./queries/store_query";
 import ErrorGetFinishFooter from "./errorGetFinishFooter";
 
@@ -15,6 +20,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
     const [userInspect, setUserInspect] = useState([])
     const [errorInspect, setErrorInspect] = useState([])
     const [checkUser, setCheckUser] = useState([])
+    const [finishDate, setFinishDate] = useState('')
     const [repairKitId, setRepairKitId] = useState([])
     const [getFinish, setGetFinish] = useState({
         descript_finish_work:'',
@@ -26,7 +32,30 @@ const ErrorGetFinish = observer(({fields, status}) => {
         geometry_fail_akt:'',
         geometry_finish_akt: null
     })
-
+    const [defaultValue, setDefaultValue] = useState({
+        user_finish_id:'',
+        descript_finish_work:'',
+        user_work_id:'',
+        user_inspect_id:'',
+        descript_inspect_error:'',
+        finish_date:'',
+        geometry_fail_akt:'',
+        geometry_finish_akt: ''
+    })
+    const Archive_not_empty = () => {
+        if(__error.data_Archive_Error[0]){
+            setDefaultValue({...defaultValue,
+                user_finish_id: __error.data_Archive_Error[0].user_finish_id,
+                descript_finish_work: __error.data_Archive_Error[0].descript_finish_work,
+                user_work_id: __error.data_Archive_Error[0].user_work_id,
+                user_inspect_id: __error.data_Archive_Error[0].user_inspect_id,
+                descript_inspect_error: __error.data_Archive_Error[0].descript_inspect_error,
+                finish_date: __error.data_Archive_Error[0].finish_date,
+                geometry_fail_akt: __error.data_Archive_Error[0].geometry_fail_akt,
+                geometry_finish_akt: __error.data_Archive_Error[0].geometry_finish_akt
+            })
+        }
+    }
     const filter_userId = (user_id) => {
         let user = []
         JSON.parse(user_id).forEach(arr => {
@@ -45,9 +74,24 @@ const ErrorGetFinish = observer(({fields, status}) => {
             return 'Б/У'
     }
 
+    const table_color = (user_id) => {
+        if (!(defaultValue.user_finish_id === '')){
+            let color = ''
+            JSON.parse(defaultValue.user_finish_id).forEach(element => {
+                if (user_id === element)
+                {
+                    color = '#178f39'
+                }
+            })
+            return color
+        }
+
+    }
+
     useEffect(()=>{
         error__inwork__query(fields.id).then(data => __error.setInWorkError(data)).finally(()=> setUserWorks(filter_userId(__error.data_InWork_Error.user_id)))
-        error__inspect_query(fields.id).then(data => setUserInspect(filter_userId(data[0].user_id))).finally(() => setErrorInspect(__error.data_Inspect_Error[0]))
+        error__archive__byid(fields.id).then(data => setUserInspect(filter_userId(data[0].user_inspect_id)))
+        error__archive__byid(fields.id).then(data => __error.setArchiveError(data)).finally(()=> Archive_not_empty())
         user_query().then(data => __user.setUser(data))
         store__query__bybrand(fields.b_name).then(data=> setStoreByBrand(data))
     }, [])
@@ -60,10 +104,11 @@ const ErrorGetFinish = observer(({fields, status}) => {
         formData.append('repair_kit_id', JSON.stringify(repairKitId))
         formData.append('user_inspect_id', __error.data_Inspect_Error[0].user_id)
         formData.append('descript_inspect_error', errorInspect.inspect_error)
-        formData.append('finish_date', Date().toLocaleString())
+        formData.append('finish_date', finishDate)
         formData.append('geometry_fail_akt', errorInspect.geometry_fail_akt)
         formData.append('geometry_finish_akt', getFinish.geometry_finish_akt)
-        console.log(formData.get('repair_kit_id'))
+        // console.log(formData.get('repair_kit_id'))
+        error__archive__create(fields.id, formData)
     }
 
     const selectFile = e =>
@@ -105,7 +150,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
                                 <tbody>
                                 {__user.data_User.map((element) => {
                                         if ((String(element.function_title) === "Сервисный инженер") || String(element.function_title) === "Механик")
-                                            return <tr key={element.id}>
+                                            return <tr key={element.id} style={{backgroundColor:`${table_color(element.id)}`}}>
                                                 <td>{element.personal_number}</td>
                                                 <td>{element.second_name} {element.first_name}</td>
                                                 <td>{element.function_title}</td>
@@ -189,15 +234,22 @@ const ErrorGetFinish = observer(({fields, status}) => {
                             <Form.Text><p>Загрузите заполненый акт после ремонта</p></Form.Text>
                             <Form.Control type="file" onChange={selectFile}/>
                         </Col>
+                        <Col className="col-lg-6">
+                            <div>
+                                <Form.Text><h5>Дата окончания работ</h5></Form.Text>
+                                <Form.Text><p> </p></Form.Text>
+                            </div>
+                            <Form.Control type="date" placeholder="Дата" onChange={(e)=> setFinishDate(e.target.value)}/>
+                        </Col>
                     </Row>
-                        {/*<ErrorGetFinishFooter userInspect={userInspect} errorInspect={errorInspect}/>*/}
+                        <ErrorGetFinishFooter userInspect={userInspect} errorArchive={defaultValue}/>
                     <hr/>
                     <Row>
                         <Col className="col-lg-6">
-                            <Button disabled variant="success">Завершить</Button>
+                            <Button variant="success">Завершить</Button>
                         </Col>
                         <Col className="col-lg-6">
-                            <Button onClick={()=> addFinishError()}>Test</Button>
+                            <Button onClick={()=> console.log(__error.data_Archive_Error[0].user_finish_id)}>Test</Button>
                         </Col>
                     </Row>
                 </Form.Group>

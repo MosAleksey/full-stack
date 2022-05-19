@@ -6,6 +6,7 @@ class ErrorStore {
         this._data_Error = []
         this._data_Inspect_Error = []
         this._data_InWork_Error = []
+        this._data_Archive_Error = []
         makeAutoObservable(this)
     }
 
@@ -17,6 +18,12 @@ class ErrorStore {
     }
     setInWorkError(InWorkError){
         this._data_InWork_Error = InWorkError
+    }
+    setArchiveError(ArchiveError){
+        this._data_Archive_Error = ArchiveError
+    }
+    get data_Archive_Error(){
+        return this._data_Archive_Error
     }
     get data_InWork_Error(){
         return this._data_InWork_Error
