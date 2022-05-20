@@ -6,8 +6,7 @@ import {user_query} from "./queries/user_query";
 import {
     error__archive__byid, error__archive__create,
     error__inspect_query,
-    error__inwork__query,
-    error_archive_create
+    error__inwork__query, error__query__update,
 } from "./queries/error__query";
 import {store__query__bybrand} from "./queries/store_query";
 import ErrorGetFinishFooter from "./errorGetFinishFooter";
@@ -54,17 +53,21 @@ const ErrorGetFinish = observer(({fields, status}) => {
                 geometry_fail_akt: __error.data_Archive_Error[0].geometry_fail_akt,
                 geometry_finish_akt: __error.data_Archive_Error[0].geometry_finish_akt
             })
+            setUserInspect(filter_userId(__error.data_Archive_Error[0].user_inspect_id))
         }
     }
     const filter_userId = (user_id) => {
-        let user = []
-        JSON.parse(user_id).forEach(arr => {
-            __user.data_User.forEach(element => {
-                if (String(arr) === String(element.id))
-                    user.push(element)
+        if (user_id){
+            let user = []
+            JSON.parse(user_id).forEach(arr => {
+                __user.data_User.forEach(element => {
+                    if (String(arr) === String(element.id))
+                        user.push(element)
+                })
             })
-        })
-        return (user)
+            return (user)
+        }
+
     }
 
     const fettle = (fettle) => {
@@ -88,9 +91,20 @@ const ErrorGetFinish = observer(({fields, status}) => {
 
     }
 
+    const getFinish_button_disabled = () => {
+        if (fields.status === 1 || fields.status === 2 || fields.status === 4)
+            return true
+    }
+
+    const footer_visible = (userInspect, errorArchive) => {
+        if (fields.status === 4)
+            return <ErrorGetFinishFooter userInspect={userInspect} errorArchive={errorArchive}/>
+
+    }
+
     useEffect(()=>{
+        error__inspect_query(fields.id).then(data => setErrorInspect(data))
         error__inwork__query(fields.id).then(data => __error.setInWorkError(data)).finally(()=> setUserWorks(filter_userId(__error.data_InWork_Error.user_id)))
-        error__archive__byid(fields.id).then(data => setUserInspect(filter_userId(data[0].user_inspect_id)))
         error__archive__byid(fields.id).then(data => __error.setArchiveError(data)).finally(()=> Archive_not_empty())
         user_query().then(data => __user.setUser(data))
         store__query__bybrand(fields.b_name).then(data=> setStoreByBrand(data))
@@ -102,12 +116,11 @@ const ErrorGetFinish = observer(({fields, status}) => {
         formData.append('descript_finish_work', getFinish.descript_finish_work)
         formData.append('user_work_id', __error.data_InWork_Error.user_id)
         formData.append('repair_kit_id', JSON.stringify(repairKitId))
-        formData.append('user_inspect_id', __error.data_Inspect_Error[0].user_id)
-        formData.append('descript_inspect_error', errorInspect.inspect_error)
+        formData.append('user_inspect_id', errorInspect[0].user_id)
+        formData.append('descript_inspect_error', errorInspect[0].inspect_error)
         formData.append('finish_date', finishDate)
-        formData.append('geometry_fail_akt', errorInspect.geometry_fail_akt)
+        formData.append('geometry_fail_akt', errorInspect[0].geometry_fail_akt)
         formData.append('geometry_finish_akt', getFinish.geometry_finish_akt)
-        // console.log(formData.get('repair_kit_id'))
         error__archive__create(fields.id, formData)
     }
 
@@ -167,7 +180,11 @@ const ErrorGetFinish = observer(({fields, status}) => {
                         <Col className="col-lg-6">
                             <div>
                                 <div>
-                                    <Form.Control onChange={(e) => setGetFinish({...getFinish, descript_finish_work: e.target.value})} as="textarea" placeholder="Описание"/>
+                                    <Form.Control
+                                        defaultValue={defaultValue.descript_finish_work}
+                                        onChange={(e) => setGetFinish({...getFinish, descript_finish_work: e.target.value})}
+                                        as="textarea"
+                                        placeholder="Описание"/>
                                 </div>
                             </div>
                         </Col>
@@ -239,17 +256,29 @@ const ErrorGetFinish = observer(({fields, status}) => {
                                 <Form.Text><h5>Дата окончания работ</h5></Form.Text>
                                 <Form.Text><p> </p></Form.Text>
                             </div>
-                            <Form.Control type="date" placeholder="Дата" onChange={(e)=> setFinishDate(e.target.value)}/>
+                            <Form.Control
+                                defaultValue={defaultValue.finish_date.slice(0, -14)}
+                                type="date"
+                                placeholder="Дата"
+                                onChange={(e)=> setFinishDate(e.target.value)}/>
                         </Col>
                     </Row>
-                        <ErrorGetFinishFooter userInspect={userInspect} errorArchive={defaultValue}/>
+                    {footer_visible(userInspect, defaultValue)}
+                    {/*    <ErrorGetFinishFooter userInspect={userInspect} errorArchive={defaultValue}/>*/}
                     <hr/>
                     <Row>
                         <Col className="col-lg-6">
-                            <Button variant="success">Завершить</Button>
+                            <Button
+                                disabled={getFinish_button_disabled()}
+                                onClick={()=>{
+                                    addFinishError();
+                                    error__query__update(`api/errors/${fields.id}`, {status: '4'});
+                                    status('4');
+                                }}
+                                variant="success">Завершить</Button>
                         </Col>
                         <Col className="col-lg-6">
-                            <Button onClick={()=> console.log(__error.data_Archive_Error[0].user_finish_id)}>Test</Button>
+                            <Button onClick={()=> addFinishError()}>Test</Button>
                         </Col>
                     </Row>
                 </Form.Group>
