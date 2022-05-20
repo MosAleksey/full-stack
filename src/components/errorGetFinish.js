@@ -53,8 +53,8 @@ const ErrorGetFinish = observer(({fields, status}) => {
                 geometry_fail_akt: __error.data_Archive_Error[0].geometry_fail_akt,
                 geometry_finish_akt: __error.data_Archive_Error[0].geometry_finish_akt
             })
-            setUserInspect(filter_userId(__error.data_Archive_Error[0].user_inspect_id))
         }
+        // setUserInspect(filter_userId(__error.data_Archive_Error[0].user_inspect_id))
     }
     const filter_userId = (user_id) => {
         if (user_id){
@@ -67,7 +67,6 @@ const ErrorGetFinish = observer(({fields, status}) => {
             })
             return (user)
         }
-
     }
 
     const fettle = (fettle) => {
@@ -91,6 +90,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
 
     }
 
+
     const getFinish_button_disabled = () => {
         if (fields.status === 1 || fields.status === 2 || fields.status === 4)
             return true
@@ -104,9 +104,10 @@ const ErrorGetFinish = observer(({fields, status}) => {
 
     useEffect(()=>{
         error__inspect_query(fields.id).then(data => setErrorInspect(data))
-        error__inwork__query(fields.id).then(data => __error.setInWorkError(data)).finally(()=> setUserWorks(filter_userId(__error.data_InWork_Error.user_id)))
+        // error__inwork__query(fields.id).then(data => __error.setInWorkError(data)).finally(()=> setUserWorks(filter_userId(__error.data_InWork_Error.user_id)))
+        // error__inwork__query(fields.id).then(data => setUserWorks(filter_userId(data.user_id))).finally(()=> console.log(userWorks))
         error__archive__byid(fields.id).then(data => __error.setArchiveError(data)).finally(()=> Archive_not_empty())
-        user_query().then(data => __user.setUser(data))
+        user_query().then(data => __user.setUser(data)).finally(()=> error__inwork__query(fields.id).then(data => setUserWorks(filter_userId(data.user_id)))).finally(()=>setUserInspect(filter_userId(__error.data_Archive_Error[0].user_inspect_id)))
         store__query__bybrand(fields.b_name).then(data=> setStoreByBrand(data))
     }, [])
 
@@ -278,7 +279,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
                                 variant="success">Завершить</Button>
                         </Col>
                         <Col className="col-lg-6">
-                            <Button onClick={()=> addFinishError()}>Test</Button>
+                            <Button onClick={()=> console.log(userWorks)}>Test</Button>
                         </Col>
                     </Row>
                 </Form.Group>
