@@ -7,10 +7,13 @@ import {observer} from "mobx-react-lite";
 import {shop_query} from "../components/queries/shop_query";
 import {user_query} from "../components/queries/user_query";
 import {error__query__create} from "../components/queries/error__query";
+import {useNavigate} from "react-router-dom";
 
 const ErrorCreatePage = observer(() => {
     const {__shop} = useContext(Context)
     const {__user} = useContext(Context)
+
+    const navigate = useNavigate()
     useEffect(() => {
         shop_query().then(data => __shop.setShop(data))
         user_query().then(data => __user.setUser(data))
@@ -78,7 +81,7 @@ const ErrorCreatePage = observer(() => {
         formData.append('operator_id', dataError.operator_id)
         formData.append('status', dataError.status)
         formData.append('explanatory', dataError.explanatory)
-        error__query__create(formData)
+        error__query__create(formData).then(() => navigate(`/errors`))
         // console.log(formData.get('explanatory'))
     }
 

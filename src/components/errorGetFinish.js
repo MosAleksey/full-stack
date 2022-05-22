@@ -54,7 +54,6 @@ const ErrorGetFinish = observer(({fields, status}) => {
                 geometry_finish_akt: __error.data_Archive_Error[0].geometry_finish_akt
             })
         }
-        // setUserInspect(filter_userId(__error.data_Archive_Error[0].user_inspect_id))
     }
     const filter_userId = (user_id) => {
         if (user_id){
@@ -265,7 +264,6 @@ const ErrorGetFinish = observer(({fields, status}) => {
                         </Col>
                     </Row>
                     {footer_visible(userInspect, defaultValue)}
-                    {/*    <ErrorGetFinishFooter userInspect={userInspect} errorArchive={defaultValue}/>*/}
                     <hr/>
                     <Row>
                         <Col className="col-lg-6">
@@ -277,9 +275,6 @@ const ErrorGetFinish = observer(({fields, status}) => {
                                     status('4');
                                 }}
                                 variant="success">Завершить</Button>
-                        </Col>
-                        <Col className="col-lg-6">
-                            <Button onClick={()=> console.log(userWorks)}>Test</Button>
                         </Col>
                     </Row>
                 </Form.Group>
