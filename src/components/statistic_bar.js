@@ -1,8 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button} from "react-bootstrap";
 import BarChart from "./BarChart";
 
-const StatisticBar = () => {
+const StatisticBar = ({errors_archive, errors}) => {
+    const [errorsStat, setErrorsStat] = useState([])
+    const [errorsFullStat, setErrorsFullStat] = useState([])
+
+    useEffect(()=>{
+        setErrorsStat(errors_archive)
+        setErrorsFullStat(errors)
+    },[errors, errors_archive])
 
     //#Врезание
     const vrezanie = [
@@ -15,12 +22,12 @@ const StatisticBar = () => {
     ]
     //#Наладочные работы
     const naladka = [
-        'Калибровака',
-        'Калибр',
+        'Калибровка',
         'Настроить',
         'Настройка',
         'Наладка',
-        'Наладить'
+        'Наладить',
+        'Откалибровать'
     ]
     //#Сбой програмсного обеспечения
     //#Электроавтоматика
@@ -30,9 +37,9 @@ const StatisticBar = () => {
             title: 'Врезание',
             data: vrezanie
     },
-    {
-        title: 'Наладочные работы',
-        data: naladka
+        {
+            title: 'Наладочные работы',
+            data: naladka
     }
     ]
     const stat_title = [
@@ -47,7 +54,8 @@ const StatisticBar = () => {
         {title:'Вибрация', inv_number: '1577'},
         {title:'Столкнулся', inv_number: '1577'},
         {title:'Настройка', inv_number: '1577'},
-        {title:'Калибр', inv_number: '1577'},
+        {title:'Калибровка', inv_number: '1577'},
+        {title:'Откалибровать', inv_number: '1577'}
     ]
 
 
@@ -92,8 +100,8 @@ const StatisticBar = () => {
     return (
         <div>
             <h3>Статистика отказов</h3>
-            <BarChart err_stat={compare_stat(one_register(stat_title), categories)} />
-            <Button onClick={()=> stat_calculate(one_register(stat_title))}>test</Button>
+            <BarChart err_full_stat={compare_stat(one_register(errorsFullStat), categories)} err_archive_stat={compare_stat(one_register(errorsStat), categories)} />
+            <Button onClick={()=> console.log(errorsFullStat)}>test</Button>
         </div>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
-const StatisticTable = ({errors}) => {
+const StatisticTable = ({errors_archive}) => {
     const navigate = useNavigate()
 
     return (
@@ -20,7 +20,7 @@ const StatisticTable = ({errors}) => {
             </tr>
             </thead>
             <tbody>
-            {errors.map(element =>
+            {errors_archive.map(element =>
                 <tr key = {element.id}
                     onClick={() => navigate(`/errors/${element.id}`)}
                     style={{backgroundColor:'#289a56', cursor:'pointer'}}

@@ -48,6 +48,11 @@ export const error__archive__byid = async (err_id) => {
     return data
 }
 
+export const error__archive__byinv_number = async (inv_number) => {
+    const {data} = await $host.get(`api/errors/${inv_number}/statistic_archive`)
+    return data
+}
+
 export const error__query__byinv_number = async (inv_number) => {
     const {data} = await $host.get(`api/errors/${inv_number}/statistic`)
     return data

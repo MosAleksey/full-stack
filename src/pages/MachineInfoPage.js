@@ -4,17 +4,19 @@ import NavBar from "../components/NavBar";
 import {machine__Info__query, machine__Info__query__By_Id} from "../components/queries/machine__info_query";
 import {Col, Container, Image, Row} from "react-bootstrap";
 import StatisticTable from "../components/statistic_table";
-import {error__query__byinv_number} from "../components/queries/error__query";
+import {error__archive__byinv_number, error__query__byinv_number} from "../components/queries/error__query";
 import StatisticBar from "../components/statistic_bar";
 
 const MachineInfoPage = () => {
 
     const [inform, setInform] = useState([])
     const [errorStatistic, setErrorStatistic] = useState([])
+    const [errorFullStatistic, setErrorFullStatistic] = useState([])
     const {inv_number} = useParams()
     useEffect(() => {
         machine__Info__query__By_Id(inv_number).then(data => setInform(data))
-        error__query__byinv_number(inv_number).then(data => setErrorStatistic(data))
+        error__archive__byinv_number(inv_number).then(data => setErrorStatistic(data))
+        error__query__byinv_number(inv_number).then(data => setErrorFullStatistic(data))
     }, [])
 
     function isNull() {
@@ -73,13 +75,13 @@ const MachineInfoPage = () => {
                 </Row>
                 <Row>
                     <Col className="col-lg-12 mt-3">
-                        <StatisticBar />
+                        <StatisticBar errors_archive={errorStatistic} errors={errorFullStatistic}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col className='col-md-12'>
                         <h3 className='mt-4'>История обслуживания и ремонтов</h3>
-                        <StatisticTable errors = {errorStatistic}/>
+                        <StatisticTable errors_archive={errorStatistic}/>
                     </Col>
                 </Row>
             </Container>
