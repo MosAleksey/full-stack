@@ -139,9 +139,13 @@ const ErrorInspecttion = observer(({fields, status}) => {
                     <Row>
                         <Col className="col-lg-6">
                             <Form.Text><h5>Геометрическая точность</h5></Form.Text>
-                            <Form.Text><a href="#">Скачать акт ISO 13041-1 (Токарные обрабатывающие
+                            <Form.Text><a href="http://localhost:8080/13041.pdf" target="_blank">Скачать документ ISO 13041-1 (Токарные обрабатывающие
                                 центры)</a><br/></Form.Text>
-                            <Form.Text><a href="#">Скачать акт ISO 10791-2 (Фрезерные обрабатывающие
+                            <Form.Text><a href="http://localhost:8080/13041.xlsx" target="_blank">Скачать образец для заполнения (Токарные обрабатывающие
+                                центры)</a><br/></Form.Text>
+                            <Form.Text><a href="http://localhost:8080/10791.pdf" target="_blank">Скачать документ ISO 10791-2 (Фрезерные обрабатывающие
+                                центры)</a><br/></Form.Text>
+                            <Form.Text><a href="http://localhost:8080/10791.xlsx" target="_blank">Скачать образец для заполнения (Токарные обрабатывающие
                                 центры)</a><br/></Form.Text>
                             <Form.Text><p>Загрузите заполненый акт после осмотра оборудования</p></Form.Text>
                             <Form.Control type="file" onChange={selectFile}/>

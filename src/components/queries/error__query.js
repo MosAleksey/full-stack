@@ -57,3 +57,7 @@ export const error__query__byinv_number = async (inv_number) => {
     const {data} = await $host.get(`api/errors/${inv_number}/statistic`)
     return data
 }
+export const error__query__update__add  = async (err_id, req_data) => {
+    const {response} = await $host.put(`api/errors/${err_id}/add`, req_data)
+    return response
+}
