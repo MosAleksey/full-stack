@@ -61,3 +61,7 @@ export const error__query__update__add  = async (err_id, req_data) => {
     const {response} = await $host.put(`api/errors/${err_id}/add`, req_data)
     return response
 }
+export const error__query__notfinish  = async (inv_number) => {
+    const {data} = await $host.get(`api/errors/${inv_number}/notfinish`)
+    return data
+}

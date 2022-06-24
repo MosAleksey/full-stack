@@ -141,7 +141,7 @@ const ErrorGetInWork = observer(({fields, status}) => {
                         <Col className="col-lg-6">
                             <Form.Text><h5>Приклепленная разовая заявка на покупку комплектующих</h5></Form.Text>
                             <div className="mt-3">
-                                <a href="#">Скачать образец заявки</a>
+                                <a href="http://localhost:8080/repair_kit.pdf" target="_blank">Скачать образец заявки</a>
                             </div>
                             <div className="mt-3 mb-1">
                                 <Form.Text>Прикрепить фаил</Form.Text>

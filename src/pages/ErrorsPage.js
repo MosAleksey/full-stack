@@ -38,3 +38,4 @@ const ErrorsPage = observer(() => {
 });
 
 export default ErrorsPage;
+

@@ -6,7 +6,7 @@ const NavBarMain = () => {
     return (
         <Navbar bg="primary" variant="dark">
             <Container>
-                <Navbar.Brand href="/" style={{fontWeight:'600'}}>ADS Online<br/><span style={{fontSize: '14px', fontWeight:'400'}}>Система управления сервисного обслуживания</span></Navbar.Brand>
+                <Navbar.Brand href="/" style={{fontWeight:'600'}}>ADS Online<br/><span style={{fontSize: '14px', fontWeight:'400'}}>Система управления службой сервисного обслуживания</span></Navbar.Brand>
                 <Nav className="ml-auto">
                     <Link to="/#">
                         <Button style={{margin: '5px', fontWeight: '600', fontSize: '17px'}}>О приложении</Button>

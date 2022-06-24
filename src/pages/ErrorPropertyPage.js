@@ -111,17 +111,6 @@ const ErrorPropertyPage = observer(() => {
                 <Row>
                     {variant_component()}
                 </Row>
-                {/*<Row>*/}
-                {/*    <Col className='col-md-6 d-flex mt-3'>*/}
-                {/*        <Button style={{marginRight: '10px'}} variant="info" onClick={() => {*/}
-                {/*            error__query__update(`api/errors/${id}`, req_status('2'));*/}
-                {/*        }}>Осмотрено</Button>*/}
-                {/*        <Button style={{marginRight: '5px'}} variant="warning" onClick={() => {*/}
-                {/*            error__query__update(`api/errors/${id}`, req_status('3'))*/}
-                {/*        }}>Принять в работу</Button>*/}
-                {/*        <Button style={{marginLeft: '5px'}} variant="success">Завершить</Button>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
             </Container>
         </div>
     );

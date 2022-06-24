@@ -1,7 +1,8 @@
 import React from 'react';
 import {Button, Col, Form, Row, Table} from "react-bootstrap";
+import clientPDF from "./report/clients/clientPDF";
 
-const ErrorGetFinishFooter = ({userInspect, errorArchive}) => {
+const ErrorGetFinishFooter = ({userInspect, errorArchive, errorById, userWorks, userFinish}) => {
     return (
         <div>
             <hr/>
@@ -53,6 +54,13 @@ const ErrorGetFinishFooter = ({userInspect, errorArchive}) => {
                         <Form.Text>Акт проверки оборудования на геометрическую точность до начала ремонта</Form.Text>
                     </div>
                     <a href={`http://localhost:8080/${errorArchive.geometry_fail_akt}`} target="_blank">Скачать акт</a>
+                </Col>
+            </Row>
+            <Row>
+                <Col className="col-lg-6">
+                    <div className="mt-2 mb-2">
+                        <Button variant='success' onClick={()=> clientPDF(errorById, userInspect, errorArchive, userWorks, userFinish)}>Скачать полный отчет</Button>
+                    </div>
                 </Col>
             </Row>
         </div>

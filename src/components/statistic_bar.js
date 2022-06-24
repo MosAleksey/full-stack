@@ -100,8 +100,9 @@ const StatisticBar = ({errors_archive, errors}) => {
     return (
         <div>
             <h3>Статистика отказов</h3>
-            <BarChart err_full_stat={compare_stat(one_register(errorsFullStat), categories)} err_archive_stat={compare_stat(one_register(errorsStat), categories)} />
-            {/*<Button onClick={()=> console.log(errorsFullStat)}>test</Button>*/}
+            <BarChart
+                err_full_stat={compare_stat(one_register(errorsFullStat), categories)}
+                err_archive_stat={compare_stat(one_register(errorsStat), categories)} />
         </div>
     );
 };

@@ -6,10 +6,11 @@ import {user_query} from "./queries/user_query";
 import {
     error__archive__byid, error__archive__create,
     error__inspect_query,
-    error__inwork__query, error__query__update,
+    error__inwork__query, error__query__notfinish, error__query__update,
 } from "./queries/error__query";
 import {store__query__bybrand} from "./queries/store_query";
 import ErrorGetFinishFooter from "./errorGetFinishFooter";
+import {machine_status_byinv} from "./queries/machine_status_query";
 
 const ErrorGetFinish = observer(({fields, status}) => {
     const {__user} = useContext(Context)
@@ -88,7 +89,32 @@ const ErrorGetFinish = observer(({fields, status}) => {
         }
 
     }
+    const machine_status = (inv_number) => {
+        let count = 0
+        error__query__notfinish(inv_number).then(data => {
+            if (data){
+                count  = data.length
+                if (count === 0){
+                    machine_status_byinv(inv_number, {status: '1'})
+                    console.log('status = 1')
+                }
+            }
+        })
+    }
 
+    const user_finish = () => {
+        if (defaultValue.user_finish_id !== ''){
+            let users = []
+            JSON.parse(defaultValue.user_finish_id).forEach(element => {
+                __user.data_User.forEach(user => {
+                    if (element === user.id){
+                        users.push(user)
+                    }
+                })
+            })
+            return users
+        }
+    }
 
     const getFinish_button_disabled = () => {
         if (fields.status === 1 || fields.status === 2 || fields.status === 4)
@@ -97,7 +123,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
 
     const footer_visible = (userInspect, errorArchive) => {
         if (fields.status === 4)
-            return <ErrorGetFinishFooter userInspect={userInspect} errorArchive={errorArchive}/>
+            return <ErrorGetFinishFooter userInspect={userInspect} errorArchive={errorArchive} errorById={fields} userWorks={userWorks} userFinish={user_finish()}/>
 
     }
 
@@ -273,6 +299,7 @@ const ErrorGetFinish = observer(({fields, status}) => {
                                     addFinishError();
                                     error__query__update(`api/errors/${fields.id}`, {status: '4'});
                                     status('4');
+                                    machine_status(fields.inv_number);
                                 }}
                                 variant="success">Завершить</Button>
                         </Col>

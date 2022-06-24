@@ -8,6 +8,7 @@ import {shop_query} from "../components/queries/shop_query";
 import {user_query} from "../components/queries/user_query";
 import {error__query__create} from "../components/queries/error__query";
 import {useNavigate} from "react-router-dom";
+import {machine_status_byid} from "../components/queries/machine_status_query";
 
 const ErrorCreatePage = observer(() => {
     const {__shop} = useContext(Context)
@@ -23,7 +24,7 @@ const ErrorCreatePage = observer(() => {
 
     const compare_shop_machine_id = (shop_name, machine_id) => {
         __shop.data_Shop.forEach(element => {
-            if (element.name === shop_name){
+            if (element.name === shop_name) {
                 setDataError({...dataError, machine_id: machine_id, shop_id: String(element.id)})
             }
             // console.log(element.name)
@@ -60,6 +61,7 @@ const ErrorCreatePage = observer(() => {
         })
 
     }
+
     const [dataError, setDataError] = useState({
         machine_id: '',
         title: '',
@@ -174,8 +176,9 @@ const ErrorCreatePage = observer(() => {
             <Container>
                 <Row>
                     <Col className="col-lg-5 mt-4">
-                        <Button variant="success" onClick={()=> add_error()}>Опубликовать заявку</Button>
+                        <Button variant="success" onClick={() => {add_error(); machine_status_byid(machineInfo.machine_id, {status: '2'})}}>Опубликовать заявку</Button>
                     </Col>
+
                 </Row>
             </Container>
         </div>
